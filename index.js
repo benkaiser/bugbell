@@ -23,7 +23,7 @@ io.on('connection', (socket) => {
     socket.to(roomID).emit('ringbell');
   });
 });
-const port = process.env.port || 3000;
+const port = process.env.PORT || process.env.SERVER_PORT || 3000;
 server.listen(port, () => {
   console.log('listening on *:' + port);
 });

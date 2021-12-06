@@ -14,7 +14,14 @@ app.get('/*', (req, res) => {
 });
 
 io.on('connection', (socket) => {
-  console.log('a user connected');
+  socket.on('joinhost', (roomID) => {
+    console.log('Joinging room: ' + roomID);
+    socket.join(roomID);
+  });
+
+  socket.on('ringbell', (roomID) => {
+    socket.to(roomID).emit('ringbell');
+  });
 });
 
 server.listen(3000, () => {

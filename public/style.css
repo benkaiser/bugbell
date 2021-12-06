@@ -1,6 +1,7 @@
 body, html {
   width: 100%;
   height: 100%;
+  margin: 0;
   font-family: 'Open Sans', sans-serif;
 }
 p {
@@ -12,7 +13,7 @@ p {
 .mb2 {
   margin-bottom: 16px;
 }
-.mv2 {
+.my2 {
   margin-top: 16px;
   margin-bottom: 16px;
 }
@@ -21,9 +22,58 @@ p {
   flex-direction: column;
   align-items: center;
 }
+.bellMessage {
+  font-weight: 600;
+  color: #ff7a7a;
+}
 #bell {
   width: 400px;
   max-width: 90%;
+  user-select: none;
+}
+@keyframes press {
+  0% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(10px);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
+}
+@keyframes shake {
+  0% {
+    transform: translateX(0);
+  }
+
+  20% {
+    transform: translateX(-10px);
+  }
+
+  40% {
+    transform: translateX(10px);
+  }
+
+  60% {
+    transform: translateX(-10px);
+  }
+
+  80% {
+    transform: translateX(10px);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+}
+.animateBell .ringerStick, .animateBell .ringer {
+  animation: press 0.1s linear;
+}
+.animateBell .bellBody, .animateBell .bellShine {
+  animation: shake .5s ease-in-out 0.05s;
 }
 .list-group {
   display: flex;
@@ -234,4 +284,8 @@ h2 {
   padding: 0.5rem 1rem;
   font-size: 1.25rem;
   border-radius: 0.3rem;
+}
+
+.big-link {
+  font-size: 20px;
 }

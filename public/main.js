@@ -9,13 +9,13 @@ class Home extends Component {
   constructor(props) {
     super(props);
     this.joinInputRef = createRef(null);
-    this.joinButtonRef = createRef(null);
+    // this.joinButtonRef = createRef(null);
     this.lastKnownLength = 0;
   }
 
   render() {
     return html`<div className='container'>
-      <h1>Bug Bash Call Bell</h1>
+      <h1>Bug Bash Bell</h1>
       <h2>How it Works</h2>
       <p>
         <ul className='list-group list-group-numbered'>
@@ -38,18 +38,18 @@ class Home extends Component {
       <p>
         <input ref=${this.joinInputRef} type="text" id="roomcode" maxlength="6" className="form-control" placeholder='123456' onkeyup=${this.onJoinKeyup.bind(this)} />
       </p>
-      <p>
-        <button className='bn632-hover' onClick=${this.joinRoom.bind(this)} ref=${this.joinButtonRef}>
-          Join Room
-        </button>
-      </p>
-    </div>`;
+      </div>`;
+      // <p>
+      //   <button className='bn632-hover' onClick=${this.joinRoom.bind(this)} ref=${this.joinButtonRef}>
+      //     Join Room
+      //   </button>
+      // </p>
   }
 
   onJoinKeyup() {
-    if (this.joinInputRef.current && this.joinButtonRef.current) {
+    if (this.joinInputRef.current) {
       if (this.lastKnownLength === 5 && this.joinInputRef.current.value.length === 6) {
-        this.joinButtonRef.current.focus();
+        this.joinRoom();
       }
       this.lastKnownLength = this.joinInputRef.current.value.length;
     }
@@ -96,20 +96,27 @@ class Room extends Component {
   }
 
   render() {
-    const domain = window.location.origin;
-    const prettyDomain = window.location.origin.split('://')[1];
-    const roomLink = `${domain}/room/${this.roomid}`;
-    const prettyRoomLink = `${prettyDomain}/room/${this.roomid}`;
     return html`<div className='container'>
       <h1>Bug Bash Bell</h1>
       ${this.state.showHostMessage ? html`<p className='bellMessage mb2'>Chrome is blocking sound playback, click bell once to enable</p>` : ''}
       <p>Press 'b' or click the bell ${!this.isHost ? ' to ring bell in host session' : ''}</p>
       ${this.renderBell()}
+      ${this.isHost && this.renderJoinMessage()}
+    </div>`;
+  }
+
+  renderJoinMessage() {
+    const domain = window.location.origin;
+    const prettyDomain = window.location.origin.split('://')[1];
+    const roomLink = `${domain}/room/${this.roomid}`;
+    const prettyRoomLink = `${prettyDomain}/room/${this.roomid}`;
+    return html`<${Fragment}>
       <h2>To Join</h2>
-      <p className='my2'>Visit <b>${prettyDomain}</b> and enter room code <b>${this.roomid}</b></p>
+      <p className='my2'>Visit <b>${prettyDomain}</b> and enter room code <b className='bellcode'>${this.roomid}</b></p>
       <p>or</p>
       <p>Go directly to <a className='big-link' href='${roomLink}'>${prettyRoomLink}</a></p>
-    </div>`;
+    </${Fragment}>
+    `;
   }
 
   renderBell() {

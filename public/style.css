@@ -3,6 +3,7 @@ body, html {
   height: 100%;
   margin: 0;
   font-family: 'Open Sans', sans-serif;
+  text-align: center;
 }
 p {
   margin: 0;
@@ -25,6 +26,11 @@ p {
 .bellMessage {
   font-weight: 600;
   color: #ff7a7a;
+}
+.bellcode {
+  font-size: 20px;
+  letter-spacing: .5em;
+  margin-left: 5px;
 }
 #bell {
   width: 400px;
@@ -258,6 +264,7 @@ h2 {
 }
 .hr-or {
   width: 400px;
+  max-width: 80%;
 }
 
 .form-control {

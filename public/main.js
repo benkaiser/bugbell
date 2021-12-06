@@ -96,17 +96,19 @@ class Room extends Component {
   }
 
   render() {
-    const domain = window.location.origin.split('://')[1];
+    const domain = window.location.origin;
+    const prettyDomain = window.location.origin.split('://')[1];
     const roomLink = `${domain}/room/${this.roomid}`;
+    const prettyRoomLink = `${prettyDomain}/room/${this.roomid}`;
     return html`<div className='container'>
       <h1>Bug Bash Bell</h1>
       ${this.state.showHostMessage ? html`<p className='bellMessage mb2'>Chrome is blocking sound playback, click bell once to enable</p>` : ''}
       <p>Press 'b' or click the bell ${!this.isHost ? ' to ring bell in host session' : ''}</p>
       ${this.renderBell()}
       <h2>To Join</h2>
-      <p className='my2'>Visit <b>${domain}</b> and enter room code <b>${this.roomid}</b></p>
+      <p className='my2'>Visit <b>${prettyDomain}</b> and enter room code <b>${this.roomid}</b></p>
       <p>or</p>
-      <p>Go directly to <a className='big-link' href='${roomLink}'>${roomLink}</a></p>
+      <p>Go directly to <a className='big-link' href='${roomLink}'>${prettyRoomLink}</a></p>
     </div>`;
   }
 

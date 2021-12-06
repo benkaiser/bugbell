@@ -9,7 +9,6 @@ class Home extends Component {
   constructor(props) {
     super(props);
     this.joinInputRef = createRef(null);
-    // this.joinButtonRef = createRef(null);
     this.lastKnownLength = 0;
   }
 
@@ -38,12 +37,12 @@ class Home extends Component {
       <p>
         <input ref=${this.joinInputRef} type="text" id="roomcode" maxlength="6" className="form-control" placeholder='123456' onkeyup=${this.onJoinKeyup.bind(this)} />
       </p>
+      <p>
+        <button className='bn632-hover' onClick=${this.joinRoom.bind(this)} ref=${this.joinButtonRef}>
+          Join Room
+        </button>
+      </p>
       </div>`;
-      // <p>
-      //   <button className='bn632-hover' onClick=${this.joinRoom.bind(this)} ref=${this.joinButtonRef}>
-      //     Join Room
-      //   </button>
-      // </p>
   }
 
   onJoinKeyup() {
@@ -170,9 +169,8 @@ class Room extends Component {
 
   makeBellSound() {
     const isHost = location.href.includes('/host/');
-    if (isHost) {
-      new Audio('/public/bell.mp3').play();
-    } else {
+    new Audio('/public/bell.mp3').play();
+    if (!isHost) {
       socket.emit('ringbell', this.roomid);
     }
   }

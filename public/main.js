@@ -80,6 +80,7 @@ class Room extends Component {
       socket.emit('joinhost', this.roomid);
       socket.on('ringbell', this.triggerBell.bind(this));
     }
+    this.state = { count: 0 };
   }
 
   componentDidMount() {
@@ -120,7 +121,8 @@ class Room extends Component {
 
   renderBell() {
     return html`<${Fragment}>
-    <svg onClick=${this.triggerBell.bind(this)} id='bell' className="${this.state.bellAnimate && 'animateBell'}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 503.322 503.322" style="enable-background:new 0 0 503.322 503.322" xml:space="preserve">
+    <div onClick=${this.triggerBell.bind(this)} className='bellContainer'>
+    <svg id='bell' className="${this.state.bellAnimate && 'animateBell'}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 503.322 503.322" style="enable-background:new 0 0 503.322 503.322" xml:space="preserve">
       <path className='ringer' style="fill:#bdc3c7" d="M251.664 117.153a8.676 8.676 0 0 1-8.678-8.678V73.763c0-4.79 3.879-8.678 8.678-8.678s8.678 3.888 8.678 8.678v34.712a8.676 8.676 0 0 1-8.678 8.678"/>
       <path className='ringerStick' style="fill:#bdc3c7" d="M295.054 82.441h-86.78c-4.799 0-8.678-3.888-8.678-8.678s3.879-8.678 8.678-8.678h86.78c4.799 0 8.678 3.888 8.678 8.678s-3.879 8.678-8.678 8.678"/>
       <path style="fill:#667d8c" d="M0 438.237h503.322v-52.068H0z"/>
@@ -128,6 +130,8 @@ class Room extends Component {
       <path className='bellBody' style="fill:#f0c419" d="M17.359 351.458c0-134.196 100.109-242.983 234.305-242.983S485.97 217.262 485.97 351.458H17.359z"/>
       <path className='bellShine' style="fill:#ede61a" d="M60.376 299.398c-.79 0-1.579-.113-2.36-.33a8.671 8.671 0 0 1-5.996-10.709c22.346-79.169 84.975-136.912 163.432-150.71 4.712-.85 9.216 2.317 10.049 7.038.824 4.721-2.326 9.225-7.047 10.058-71.836 12.635-129.206 65.64-149.738 138.327a8.673 8.673 0 0 1-8.34 6.326"/>
     </svg>
+    ${ this.isHost && html`<p className='counter'>${this.state.count}</p>` }
+    </div>
     </${Fragment}>`;
   }
 
@@ -139,13 +143,15 @@ class Room extends Component {
       });
       requestAnimationFrame(() => {
         this.setState({
-          bellAnimate: true
+          bellAnimate: true,
+          count: this.state.count + 1
         });
       })
     } else {
       this.setState({
         showHostMessage: false,
-        bellAnimate: true
+        bellAnimate: true,
+        count: this.state.count + 1
       });
     }
     setTimeout(() => {

@@ -271,6 +271,9 @@ h2 {
 .text-center {
   text-align: center;
 }
+.text-left {
+  text-align: left;
+}
 .hr-or {
   width: 400px;
   max-width: 80%;

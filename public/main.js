@@ -17,7 +17,7 @@ class Home extends Component {
       <h1>Bug Bash Bell</h1>
       <h2>How it Works</h2>
       <p>
-        <ul className='list-group list-group-numbered'>
+        <ul className='list-group list-group-numbered text-left'>
           <li className='list-group-item'> Create a room</li>
           <li className='list-group-item'> Share screen and audio in the meeting</li>
           <li className='list-group-item'> Others join</li>
